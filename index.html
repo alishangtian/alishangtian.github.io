@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <p id="demo" style="font-size: large;"></p>
+    <div id="demo"></div>
     <script>
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -16,8 +16,8 @@
         async function ride() {
             for (let i = 1; i < 100000000000000000; i++) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    $("#demo").html("latitude :" + position.coords.latitude +
-                        "<br/> longitude :" + position.coords.longitude + "<br/> time:" + Date.now());
+                    $("#demo").html("<p style=\"font-size: large;\">latitude :" + position.coords.latitude +
+                        "<br/> longitude :" + position.coords.longitude + "<br/> time:" + Date.now() + "</p>");
                 });
                 await sleep(1000);
                 // navigator.geolocation.getCurrentPosition(function (position) {
