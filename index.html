@@ -4,45 +4,28 @@
 <head>
     <meta charset="utf-8">
     <title>jps speed</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
+    <p id="demo">moving</p> <br>
     <p id="demo"></p>
-    <button onclick="getLocation()">click</button>
     <script>
-        var p = document.getElementById("demo");
-        function getLocation() {
-            var options = {
-                enableHighAccuracy: true,
-                maximumAge: 100
-            }
-            if (navigator.geolocation) {
-                // navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-                navigator.geolocation.watchPosition(showPosition);
-            } else {
-                alert("not support geolocation");
-            }
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
-        function showPosition(pos) {
-            p.innerHTML("latitude: " + pos.coords.longitude +
-                "longitude: " + pos.coords.latitude)
-        }
-        function onError(error) {
-            switch (error.code) {
-                case 1:
-                    p.innerHTML("location deny");
-                    break;
-                case 2:
-                    p.innerHTML("can not get location");
-                    break;
-                case 3:
-                    p.innerHTML("time out");
-                    break;
-                case 4:
-                    p.innerHTML("unknown error");
-                    break;
+        async function ride() {
+            for (let i = 1; i < 100000000000000000; i++) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    $("#demo").html("speed" + position.coords.speed);
+                });
+                await sleep(1000);
+                // navigator.geolocation.getCurrentPosition(function (position) {
+                //     console.log(position.coords.latitude + ":" + position.coords.longitude);
+                // });
             }
         }
+        ride()
     </script>
 </body>
 
