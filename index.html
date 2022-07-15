@@ -5,24 +5,49 @@
     <meta charset="utf-8">
     <title>jps speed</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        div {
+            font-size: larger;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="demo"></div>
+    <div id="speed">speed</div>
+    <div id="before"></div>
+    <div id="after"></div>
     <script>
+        function GetDistance(lat1, lng1, lat2, lng2) {
+            var radLat1 = lat1 * Math.PI / 180.0;
+            var radLat2 = lat2 * Math.PI / 180.0;
+            var a = radLat1 - radLat2;
+            var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+            var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+                Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+            s = s * 6378137;// EARTH_RADIUS;
+            s = Math.round(s * 10000) / 10000;
+            return s;
+        }
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
         async function ride() {
             for (let i = 1; i < 100000000000000000; i++) {
+                var la1, long1, la2, long2
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    $("#demo").html("<p style=\"font-size: large;\">latitude :" + position.coords.latitude +
-                        "<br/> longitude :" + position.coords.longitude + "<br/> time:" + Date.now() + "</p>");
+                    la1 = position.coords.latitude;
+                    long1 = position.coords.longitude;
+                    $("#before").html("latitude :" + la1 +
+                        "<br/> longitude :" + long1 + "<br/> time:" + Date.now());
                 });
                 await sleep(1000);
-                // navigator.geolocation.getCurrentPosition(function (position) {
-                //     console.log(position.coords.latitude + ":" + position.coords.longitude);
-                // });
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    la2 = position.coords.latitude;
+                    long2 = position.coords.longitude;
+                    $("#after").html("latitude :" + la2 +
+                        "<br/> longitude :" + long2 + "<br/> time:" + Date.now());
+                });
+                $("#speed").html(GetDistance(la1, long1, la2, long2));
             }
         }
         ride()
