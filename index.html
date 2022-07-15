@@ -14,32 +14,32 @@
         function getLocation() {
             var options = {
                 enableHighAccuracy: true,
-                maximumAge: 1000
+                maximumAge: 100
             }
             if (navigator.geolocation) {
-                alert("support geolocation");
-                navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+                // navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+                navigator.geolocation.watchPosition(showPosition);
             } else {
                 alert("not support geolocation");
             }
         }
-        function onSuccess(pos) {
-            alert("latitude: " + pos.coords.longitude +
+        function showPosition(pos) {
+            p.innerHTML("latitude: " + pos.coords.longitude +
                 "longitude: " + pos.coords.latitude)
         }
         function onError(error) {
             switch (error.code) {
                 case 1:
-                    alert("location deny");
+                    p.innerHTML("location deny");
                     break;
                 case 2:
-                    alert("can not get location");
+                    p.innerHTML("can not get location");
                     break;
                 case 3:
-                    alert("time out");
+                    p.innerHTML("time out");
                     break;
                 case 4:
-                    alert("unknown error");
+                    p.innerHTML("unknown error");
                     break;
             }
         }
