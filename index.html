@@ -6,8 +6,8 @@
     <title>jps speed</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        div {
-            font-size: large;
+        p {
+            font-size: 100px;
         }
     </style>
 </head>
@@ -46,8 +46,8 @@
                     long2 = position.coords.longitude;
                     $("#after").html("latitude :" + la2 +
                         "<br/> longitude :" + long2 + "<br/> time:" + Date.now());
+                    $("#speed").html(GetDistance(la1, long1, la2, long2));
                 });
-                $("#speed").html(GetDistance(la1, long1, la2, long2));
             }
         }
         ride()
