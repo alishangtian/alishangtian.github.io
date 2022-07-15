@@ -17,7 +17,7 @@
             for (let i = 1; i < 100000000000000000; i++) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     $("#demo").html("latitude :" + position.coords.latitude +
-                        "/n longitude :" + position.coords.longitude + " /n time:" + Date.now);
+                        "<br/> longitude :" + position.coords.longitude + "<br/> time:" + Date.now());
                 });
                 await sleep(1000);
                 // navigator.geolocation.getCurrentPosition(function (position) {
